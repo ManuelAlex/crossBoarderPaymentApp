@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "884770062264",
+    "project_id": "penge-send-trial",
+    "storage_bucket": "penge-send-trial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884770062264:android:7b8d1733078dc55ec5994d",
+        "android_client_info": {
+          "package_name": "com.example.penge_send"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884770062264-ujtspbtdei0oqe3t50ohtclfihnc29vm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBktL5FBv9B8b84Kilhgt_I0CjCU1ctPXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884770062264-ujtspbtdei0oqe3t50ohtclfihnc29vm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
