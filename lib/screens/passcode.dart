@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:penge_send/auth/passcode_brain.dart';
+import 'package:penge_send/auth/test.dart';
 
 import 'package:penge_send/constants/colour_const.dart';
+import 'package:penge_send/platform/android_platform/android_platform.dart';
+import 'package:penge_send/resources/global_methods.dart';
 
 import 'package:penge_send/screens/widgets/test_widget.dart';
 
@@ -12,14 +17,25 @@ class PasscodePage extends StatefulWidget {
 }
 
 class _PasscodePageState extends State<PasscodePage> {
+  final PasscodeSecureStorage myPassSecStore = PasscodeSecureStorage();
   List<Dots> dots = [];
+  String passedValues = '';
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  //List<String>dotStrings =[];
+  // late bool _hasString = _storage.containsKey(key: _setPassCodekey);
+  int counter = 0;
+  int maxListValue = 4;
+  bool _hasString = false;
+
+  String? passcode;
 
   @override
   void initState() {
+    myValueString();
     super.initState();
   }
 
-  final List _passValues = [];
+  final List<int> _passValues = [0];
   void addToList(value) {
     _passValues.add(value);
   }
@@ -28,14 +44,31 @@ class _PasscodePageState extends State<PasscodePage> {
     _passValues.removeLast();
   }
 
-  void buttonFunc(keyboard) {
-    if (_passValues.length != 4) {
+  Future<void> myValueString() async {
+    passcode = await _storage.read(key: 'key');
+    // setState(() {
+    //   passcode;
+    // });
+  }
+
+  void buttonFunc(keyboard) async {
+    if (_passValues.length < maxListValue) {
       addToList(keyboard);
       setState(() {
         dots.add(const Dots(color: Colors.red));
+        // _passValues;
       });
-    } else {
-      _passValues.clear();
+    } else if (maxListValue == maxListValue) {
+      if (maxListValue == maxListValue) {
+        int count = 0;
+        for (int pin in _passValues) {
+          passedValues = passedValues + pin.toString();
+          count++;
+        }
+        print(passedValues);
+        await _storage.write(key: 'key', value: passedValues);
+        _passValues.clear();
+      }
     }
   }
 
@@ -52,15 +85,23 @@ class _PasscodePageState extends State<PasscodePage> {
                 const SizedBox(
                   height: 60,
                 ),
-                const TextWidget(
-                  title: 'Penge Send',
-                  fontsize: 30,
-                ),
+                // FutureBuilder<String?>(
+                //     future: myValueString(),
+                //     builder: ((context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         return Text(snapshot.data ?? '');
+                //       } else {
+                //         return Text("loading");
+                //       }
+                //     })),
+                Text(passcode ?? ''),
                 const SizedBox(
                   height: 30,
                 ),
-                const TextWidget(
-                  title: 'Enter your Pin',
+                TextWidget(
+                  // title: 'Enter your Pin',
+                  title:
+                      _hasString ? 'Let\'s setup your pin' : 'Enter your Pin',
                   fontsize: 20,
                   fontWeight: FontWeight.normal,
                 ),

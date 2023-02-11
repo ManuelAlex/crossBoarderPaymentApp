@@ -1,15 +1,19 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:penge_send/constants/colour_const.dart';
+import 'package:penge_send/models/user.dart' as model;
+
+import 'package:penge_send/provider/user_provider.dart';
 import 'package:penge_send/resources/global_methods.dart';
-import 'package:penge_send/screens/passcode.dart';
+
+import 'package:penge_send/screens/pincode.dart';
 import 'package:penge_send/screens/widgets/button.dart';
 import 'package:penge_send/screens/widgets/test_widget.dart';
+
+import 'package:provider/provider.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({super.key});
@@ -31,6 +35,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       sendVerificationEmail();
       timer = Timer.periodic(
           const Duration(seconds: 3), (_) => checkEmailVerified());
+      // loadUserDetails();
     }
     super.initState();
   }
@@ -64,37 +69,67 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   @override
-  Widget build(BuildContext context) => isEmailVerified
-      ? const PasscodePage()
-      : Scaffold(
-          appBar: AppBar(
-            title: const TextWidget(title: 'Verify Email'),
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const TextWidget(
-                title: 'A verification to your email',
-                fontsize: 18,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: isEmailVerified
+          ? null
+          : AppBar(
+              title: const TextWidget(title: 'Verify Email'),
+            ),
+      body: isEmailVerified
+          ? const PinCode()
+          : Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const TextWidget(
+                    title: 'A verification has been sent to your email',
+                    fontsize: 18,
+                  ),
+                  const SizedBox(height: 100),
+                  InkWell(
+                    onTap: (() {
+                      canResendEmail ? sendVerificationEmail() : () {};
+                    }),
+                    child: Button(
+                      title: 'Resend Email',
+                      hasIcon: true,
+                      color: kwalletContainerColour,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: TextButton(
+                        onPressed: (() => _auth.signOut()),
+                        child: const TextWidget(
+                          title: 'Cancel',
+                          color: kWhite,
+                        )),
+                  )
+                ],
               ),
-              InkWell(
-                onTap: (() {
-                  canResendEmail ? sendVerificationEmail() : () {};
-                }),
-                child: Button(
-                  title: 'Resend Email',
-                  hasIcon: true,
-                ),
-              ),
-              Center(
-                child: TextButton(
-                    onPressed: (() => _auth.signOut()),
-                    child: const TextWidget(
-                      title: 'Cancel',
-                      color: kWhite,
-                    )),
-              )
-            ],
-          ),
-        );
+            ),
+    );
+  }
+}
+
+class PushNav extends StatefulWidget {
+  const PushNav({super.key});
+  @override
+  State<PushNav> createState() => _PushNavState();
+}
+
+class _PushNavState extends State<PushNav> {
+  @override
+  void initState() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const PinCode()));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircularProgressIndicator();
+  }
 }

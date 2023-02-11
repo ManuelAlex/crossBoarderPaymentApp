@@ -7,27 +7,30 @@ class WalletContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8),
-      child: Container(
-        height: MediaQuery.of(context).size.height / 6,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            color: kwalletContainerColour,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 4,
-                offset: const Offset(1, 3), // changes position of shadow
-              ),
-            ],
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30))),
-        child: const WalletContent(),
+    return Expanded(
+      flex: 5,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8),
+        child: Container(
+          height: MediaQuery.of(context).size.height / 6,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              color: kwalletContainerColour,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: const Offset(1, 3), // changes position of shadow
+                ),
+              ],
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30))),
+          child: const WalletContent(),
+        ),
       ),
     );
   }

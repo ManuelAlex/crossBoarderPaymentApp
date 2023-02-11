@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:penge_send/models/user.dart' as model;
 
 class AuthMethod {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   //sign up
   Future<String> sighUp({
@@ -16,22 +16,24 @@ class AuthMethod {
       if (email.isNotEmpty || name.isNotEmpty || password.isNotEmpty) {
         UserCredential credSignUp = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        String userUid = credSignUp.user!.uid;
 
         print(credSignUp.user!.uid);
-        String userUid = credSignUp.user!.uid;
-        _firestore.collection('users').doc(credSignUp.user!.uid).set({
-          "uid": userUid,
-          "name": name,
-          "passcode": 0000,
-          "phoneNumber": '',
-          "address": '',
-          "walletAmount": 0.00,
-          "paymentLimit": 1000000,
-          "withdrawalLimit": 5000000,
-          "transactionHistory": [],
-          "userContacts": [],
-          "createdAt": FieldValue.serverTimestamp(),
-        });
+        model.User user = model.User(
+          uid: userUid,
+          surname: '',
+          name: name,
+          email: email,
+          phoneNumber: '',
+          address: '',
+          password: password,
+          walletAmout: 0.00,
+          paymentLimit: 1000000,
+          withdrawalLimit: 5000000,
+          transactionHistory: [],
+          userContacts: [],
+        );
+        _firestore.collection('users').doc(userUid).set(user.toJson());
       }
 
       res = 'success';
@@ -62,5 +64,14 @@ class AuthMethod {
     }
 
     return res;
+  }
+
+  Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot docSnapUser =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromSnap(snap: docSnapUser);
   }
 }

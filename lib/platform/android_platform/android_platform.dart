@@ -1,95 +1,91 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:penge_send/constants/styles_const.dart';
-import 'package:penge_send/screens/widgets/activity_avatar.dart';
-import 'package:penge_send/screens/widgets/dottet_circle_icon.dart';
+import 'package:penge_send/constants/colour_const.dart';
+import 'package:penge_send/screens/bill_screen.dart';
+import 'package:penge_send/screens/home_screen.dart';
+import 'package:penge_send/screens/trans_scr_history.dart';
+import 'package:penge_send/screens/user_screen.dart';
 
-import 'package:penge_send/screens/widgets/profile_display.dart';
-import 'package:penge_send/screens/widgets/transaction_history.dart';
-import 'package:penge_send/screens/widgets/wallet_container.dart';
-
-class AndroidPlatform extends StatelessWidget {
+class AndroidPlatform extends StatefulWidget {
   const AndroidPlatform({super.key});
+
+  @override
+  State<AndroidPlatform> createState() => _AndroidPlatformState();
+}
+
+class _AndroidPlatformState extends State<AndroidPlatform> {
+  int _page = 0;
+  late PageController pageController;
+  navigationTapped(int page) {
+    pageController.jumpToPage(page);
+  }
+
+  onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
+  @override
+  void initState() {
+    pageController = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              ProfileDisplay(),
-              WalletContainer(),
-              ActiveCircleIcons(),
-              DottedCircleIcon(),
-              TransanctionHistory(),
-            ],
-          ),
-        ),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        children: const [
+          HomeScreen(),
+          TransactionHistory(),
+          BillScreen(),
+          UserScreen(),
+        ],
       ),
-    );
-  }
-}
-
-class ActiveCircleIcons extends StatelessWidget {
-  const ActiveCircleIcons({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ActivityAvater(
-          iconData: Icons.send,
-          boxDecoration: kCircleIconHumanAvatar.copyWith(
-              color: Colors.lightBlue.withOpacity(0.5)),
-          color: Colors.lightBlue,
-          turns: 3,
-          myText: 'send',
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        ActivityAvater(
-          iconData: Icons.payment,
-          boxDecoration: kCircleIconHumanAvatar.copyWith(
-              color: Colors.red.withOpacity(0.5)),
-          color: Colors.red,
-          myText: 'Pay',
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        ActivityAvater(
-          iconData: Icons.wallet,
-          boxDecoration: kCircleIconHumanAvatar.copyWith(
-              color: Colors.green.withOpacity(0.5)),
-          color: Colors.green,
-          myText: 'Withdraw',
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        ActivityAvater(
-          iconData: Icons.money,
-          boxDecoration: kCircleIconHumanAvatar.copyWith(
-              color: Colors.purple.withOpacity(0.5)),
-          color: Colors.purple,
-          myText: 'bill',
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        ActivityAvater(
-          iconData: Icons.stairs,
-          boxDecoration: kCircleIconHumanAvatar.copyWith(
-              color: Colors.orange.withOpacity(0.5)),
-          color: Colors.orange,
-          myText: 'voucher',
-        ),
-      ],
+      bottomNavigationBar: CupertinoTabBar(
+        onTap: navigationTapped,
+        backgroundColor: kScalfoldBackgroundColour,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                color: _page == 0 ? kCircleAvataIconColour : kSecondaryColour,
+              ),
+              label: '',
+              backgroundColor: kSecondaryColour),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.history,
+                color: _page == 1 ? kCircleAvataIconColour : kSecondaryColour,
+              ),
+              label: '',
+              backgroundColor: kSecondaryColour),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.payment,
+                color: _page == 2 ? kCircleAvataIconColour : kSecondaryColour,
+              ),
+              label: '',
+              backgroundColor: kSecondaryColour),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                color: _page == 3 ? kCircleAvataIconColour : kSecondaryColour,
+              ),
+              label: '',
+              backgroundColor: kSecondaryColour),
+        ],
+      ),
     );
   }
 }

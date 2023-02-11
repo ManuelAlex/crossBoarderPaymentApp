@@ -8,80 +8,83 @@ class DottedCircleIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 15),
-        Text(
-          'Send Money',
-          style: kwalletBalanceDecoration.copyWith(
-              fontSize: 18, color: kWhite, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 15),
-        Row(
-          children: [
-            DottedAddContainer(
-              paddingValue: 16,
-              iconOrImage: const Icon(
-                Icons.person,
+    return Expanded(
+      flex: 5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 15),
+          Text(
+            'Send Money',
+            style: kwalletBalanceDecoration.copyWith(
+                fontSize: 18, color: kWhite, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 15),
+          Row(
+            children: [
+              DottedAddContainer(
+                paddingValue: 16,
+                iconOrImage: const Icon(
+                  Icons.person,
+                  color: kWhite,
+                ),
+                boxDecoration: kCircleIconHumanAvatar.copyWith(
+                    color: kScalfoldBackgroundColour),
                 color: kWhite,
+                myText: '+ Add',
               ),
-              boxDecoration: kCircleIconHumanAvatar.copyWith(
-                  color: kScalfoldBackgroundColour),
-              color: kWhite,
-              myText: '+ Add',
-            ),
-            DottedAddContainer(
-                iconOrImage: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  child: Image.asset(
-                    'lib/assets/images/black_pink_guy_avatar.png',
-                    width: 42,
-                    fit: BoxFit.contain,
+              DottedAddContainer(
+                  iconOrImage: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    child: Image.asset(
+                      'lib/assets/images/black_pink_guy_avatar.png',
+                      width: 42,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                boxDecoration: kCircleIconHumanAvatar,
-                color: kScalfoldBackgroundColour,
-                myText: 'Ayoub'),
-            DottedAddContainer(
-                iconOrImage: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  child: Image.asset(
-                    'lib/assets/images/yellow_cute_guy_avatar.png',
-                    width: 42,
-                    fit: BoxFit.contain,
+                  boxDecoration: kCircleIconHumanAvatar,
+                  color: kScalfoldBackgroundColour,
+                  myText: 'Ayoub'),
+              DottedAddContainer(
+                  iconOrImage: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    child: Image.asset(
+                      'lib/assets/images/yellow_cute_guy_avatar.png',
+                      width: 42,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                boxDecoration: kCircleIconHumanAvatar,
-                color: kScalfoldBackgroundColour,
-                myText: 'Baba'),
-            DottedAddContainer(
-                iconOrImage: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  child: Image.asset(
-                    'lib/assets/images/yellow_cute_girl_avatar.png',
-                    width: 42,
-                    fit: BoxFit.contain,
+                  boxDecoration: kCircleIconHumanAvatar,
+                  color: kScalfoldBackgroundColour,
+                  myText: 'Baba'),
+              DottedAddContainer(
+                  iconOrImage: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    child: Image.asset(
+                      'lib/assets/images/yellow_cute_girl_avatar.png',
+                      width: 42,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                boxDecoration: kCircleIconHumanAvatar,
-                color: kScalfoldBackgroundColour,
-                myText: 'Mercy'),
-            DottedAddContainer(
-                iconOrImage: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  child: Image.asset(
-                    'lib/assets/images/yellow_cute_gir_avatar2.png',
-                    width: 42,
-                    fit: BoxFit.contain,
+                  boxDecoration: kCircleIconHumanAvatar,
+                  color: kScalfoldBackgroundColour,
+                  myText: 'Mercy'),
+              DottedAddContainer(
+                  iconOrImage: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    child: Image.asset(
+                      'lib/assets/images/yellow_cute_gir_avatar2.png',
+                      width: 42,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                boxDecoration: kCircleIconHumanAvatar,
-                color: kScalfoldBackgroundColour,
-                myText: 'Hijab'),
-          ],
-        ),
-      ],
+                  boxDecoration: kCircleIconHumanAvatar,
+                  color: kScalfoldBackgroundColour,
+                  myText: 'Hijab'),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -126,7 +129,7 @@ class DottedAddContainer extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Text(
               myText,
               style: kwalletBalanceDecoration.copyWith(

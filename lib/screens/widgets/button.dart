@@ -36,6 +36,9 @@ class Button extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           hasIcon ? Icon(iconData) : Container(),
+          const SizedBox(
+            width: 10,
+          ),
           Text(
             title,
             style: kRichTextStyle.copyWith(color: kScalfoldBackgroundColour),
